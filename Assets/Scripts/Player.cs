@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
 
     [SerializeField] private GameObject _flipFlopPrefab;
     [SerializeField] private Transform _throwPoint;
+    private int _flipFlopNum = 1;
 
     [SerializeField] private float _movementSpeed;
     [SerializeField] private int _jumpForce;
@@ -34,12 +35,13 @@ public class Player : MonoBehaviour
     {
         Movement();
         PlayerInputs();
+        OnFlipFlopReturn();
     }
     #endregion  
 
     private void PlayerInputs()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (IsGrounded() == true && Input.GetKeyDown(KeyCode.Space))
         {
             Jump();
         }
@@ -48,7 +50,7 @@ public class Player : MonoBehaviour
         {
             _movementSpeed *= 2;
         }
-        if (Input.GetKey(KeyCode.Mouse0))
+        if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             FlipFlopThrow();
         }
@@ -56,8 +58,25 @@ public class Player : MonoBehaviour
 
     private void FlipFlopThrow()
     {
-        Instantiate(_flipFlopPrefab, _throwPoint.position, _throwPoint.rotation); 
+        Instantiate(_flipFlopPrefab, _throwPoint.position, _throwPoint.rotation);
+        _flipFlopNum--;
     }
+
+    private void OnFlipFlopReturn()
+    {
+        if (_flipFlopNum == 0)
+        {
+            _flipFlopNum++;
+        }
+    
+    }
+
+    //private bool HasFlipFlop()
+    //{
+    //    if (_flipFlopNum == 0) return false;
+    //    if (_flipFlopNum == 1) return true;
+    //}
+        
 
     private void GotHit()
     {
@@ -108,10 +127,7 @@ public class Player : MonoBehaviour
 
     private void Jump()
     {
-        if (IsGrounded() == true) 
-        { 
-            _rigidbody.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
-        }
+        _rigidbody.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
     }
     #endregion
 }
