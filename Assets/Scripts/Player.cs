@@ -36,6 +36,7 @@ public class Player : MonoBehaviour
         Movement();
         PlayerInputs();
         OnFlipFlopReturn();
+     
     }
     #endregion  
 
@@ -78,7 +79,7 @@ public class Player : MonoBehaviour
     //}
         
 
-    private void GotHit()
+    public void GotHit()
     {
         _lifes--;
 
