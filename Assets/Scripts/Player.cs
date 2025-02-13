@@ -36,7 +36,7 @@ public class Player : MonoBehaviour
         Movement();
         PlayerInputs();
         OnFlipFlopReturn();
-     
+
     }
     #endregion  
 
@@ -51,25 +51,25 @@ public class Player : MonoBehaviour
         {
             _movementSpeed *= 2;
         }
-        if (Input.GetKeyDown(KeyCode.Mouse0))
-        {
-            FlipFlopThrow();
-        }
+        //if (Input.GetKeyDown(KeyCode.Mouse0))
+        //{
+        //    FlipFlopThrow();
+        //}
     }
 
-    private void FlipFlopThrow()
-    {
-        Instantiate(_flipFlopPrefab, _throwPoint.position, _throwPoint.rotation);
-        _flipFlopNum--;
-    }
+    //private void FlipFlopThrow()
+    //{
+    //    Instantiate(_flipFlopPrefab, _throwPoint.position, _throwPoint.rotation);
+    //    _flipFlopNum--;
+    //}
 
     private void OnFlipFlopReturn()
     {
-        if (_flipFlopNum == 0)
-        {
-            _flipFlopNum++;
-        }
-    
+        //if (_flipFlopNum == 0)
+        //{
+        //    _flipFlopNum++;
+        //}
+
     }
 
     //private bool HasFlipFlop()
@@ -77,7 +77,7 @@ public class Player : MonoBehaviour
     //    if (_flipFlopNum == 0) return false;
     //    if (_flipFlopNum == 1) return true;
     //}
-        
+
 
     public void GotHit()
     {
