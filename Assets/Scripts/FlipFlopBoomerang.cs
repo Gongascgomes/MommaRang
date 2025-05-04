@@ -1,127 +1,78 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class FlipFlopBoom : MonoBehaviour
 {
-    [SerializeField] GameObject ffBoomerang;
-    
-    [SerializeField] Transform ffLocation;
-    [SerializeField] Transform ffRotation;
 
-    [SerializeField] float ffDistance; 
-    [SerializeField] float throwSpeed; 
-    
-    [SerializeField] LayerMask layerMask;
+    [SerializeField] private int _speed;
+    [SerializeField] private int _rotateSpeed;
+    [SerializeField] private float _time;
+    [SerializeField] Player _player;
 
-    [SerializeField] bool isThrown;
-    [SerializeField] bool isReturning;
+    [SerializeField] private Rigidbody2D rigidBody;
 
-    [SerializeField] Vector3 throwPosition;
-    [SerializeField] Rotator rotator;
+
+
+
+    private void Start()
+    {
+        rigidBody = GetComponent<Rigidbody2D>();
+
+        rigidBody.velocity = Vector2.right * _speed;
+       
+
+    }
+    public void SetDirection(Vector2 direction)
+    {
+        rigidBody.velocity = direction * _speed;
+    }
     
-    [SerializeField] ColorChangeOncollision colorChangeOnCollision;
+    private void Update()
+    {
+       
+        transform.Rotate(_rotateSpeed * Time.deltaTime * Vector3.forward);
+        
+        
+        _time += Time.deltaTime;
+        if (_time >= 2)
+        {
+            Vector2 direction = (_player.transform.position - transform.position).normalized;
+
+           
+            rigidBody.velocity = direction * _speed;
+        }
     
-    [SerializeField] float damage;
-    
-    //[SerializeField] Health healthObjectHit;
+
+    }
+
+
+
+
+
+    private void OnCollisionEnter2D (Collision2D collision)
+    {
+        Player _player = collision.gameObject.GetComponent<Player>();
+
+        if (_player != null)
+        {
+            Destroy(gameObject);
+        }
+    }
 
    
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Mouse0))
-        {
-            if (isThrown || isReturning) return;
-            CheckDistance();
-        }
-
-        if (isThrown)
-        {
-
-            Vector3 newPos = Vector3.MoveTowards(ffBoomerang.transform.position, throwPosition, throwSpeed * Time.deltaTime);
-            
-            ffBoomerang.transform.position = newPos;
-
-            ffBoomerang.GetComponent<MeshCollider>().enabled = true;
-
-            if (ffBoomerang.transform.position == throwPosition)
-            {
-                if(colorChangeOnCollision != null)
-                {
-                    colorChangeOnCollision.ChangeColor();
-                    colorChangeOnCollision = null;
-                }
-                //if(healthObjectHit != null)
-                //{
-                //    healthObjectHit.TakeDamage(damage);
-                //    healthObjectHit = null;
-                //}
-            
-                isThrown = false;
-                isReturning = true;
-            
-            }
-                          
-        }
-
-        if (isReturning)
-        {
-            Vector3 newPos = Vector3.MoveTowards(ffBoomerang.transform.position, ffLocation.position, throwSpeed * Time.deltaTime);
-
-            if(ffBoomerang.transform.position == ffLocation.position)
-            {
-                isReturning = false;
-                rotator.enabled = false;
-                ffBoomerang.transform.parent = ffLocation;
-                ffBoomerang.transform.rotation = ffRotation.rotation;
-            }
-        }     
-    }
-
-    void CheckDistance()
-    {
-        RaycastHit hit;
-
-        if(Physics.Raycast(ffLocation.transform.position,ffLocation.transform.forward,out hit, ffDistance,layerMask))
-        {
-            if(hit.transform.GetComponentInParent<ColorChangeOncollision>() != null)
-            {
-                colorChangeOnCollision = hit.transform.GetComponentInParent<ColorChangeOncollision>();
-            }
-            //if(hit.transform.GetComponentInParent<Health>() != null)
-            //{
-            //    healthObjectHit = hit.transform.GetComponentInParent<Health>();
-            //}
-
-            throwPosition = hit.point;
-            ffBoomerang.transform.parent = null;
-            rotator.enabled= true;
-            isThrown = true;
-        
-        
-        }
-        else
-        {
-            throwPosition = ffLocation.forward * ffDistance;
-            ffBoomerang.transform.parent = null;
-            rotator.enabled = true;
-            isThrown = true;
-        }
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
+   
+
+
+
+
+
+
+
+
+
+
+

@@ -12,8 +12,9 @@ public class Player : MonoBehaviour
     [SerializeField] private int _lifes = 3;
 
     [SerializeField] private GameObject _flipFlopPrefab;
-    [SerializeField] private Transform _throwPoint;
-    private int _flipFlopNum = 1;
+
+    [SerializeField] private Vector3 FFRightOffset;
+
 
     [SerializeField] private float _movementSpeed;
     [SerializeField] private int _jumpForce;
@@ -35,7 +36,7 @@ public class Player : MonoBehaviour
     {
         Movement();
         PlayerInputs();
-        OnFlipFlopReturn();
+        
 
     }
     #endregion  
@@ -51,32 +52,23 @@ public class Player : MonoBehaviour
         {
             _movementSpeed *= 2;
         }
-        //if (Input.GetKeyDown(KeyCode.Mouse0))
-        //{
-        //    FlipFlopThrow();
-        //}
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            FlipFlopThrow();
+        }
     }
 
-    //private void FlipFlopThrow()
-    //{
-    //    Instantiate(_flipFlopPrefab, _throwPoint.position, _throwPoint.rotation);
-    //    _flipFlopNum--;
-    //}
-
-    private void OnFlipFlopReturn()
+    private void FlipFlopThrow()
     {
-        //if (_flipFlopNum == 0)
-        //{
-        //    _flipFlopNum++;
-        //}
+        GameObject newFF = Instantiate(_flipFlopPrefab);
+
+        newFF.transform.position = transform.position + FFRightOffset;
+
+        newFF.GetComponent<FlipFlopBoom>().SetDirection(Vector2.right);
 
     }
 
-    //private bool HasFlipFlop()
-    //{
-    //    if (_flipFlopNum == 0) return false;
-    //    if (_flipFlopNum == 1) return true;
-    //}
+ 
 
 
     public void GotHit()
