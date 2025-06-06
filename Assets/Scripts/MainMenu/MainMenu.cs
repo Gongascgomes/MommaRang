@@ -1,31 +1,29 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
     private GameManager _gameManager;
     [SerializeField] private GameObject _mainMenuPanel;
-    [SerializeField] private GameObject _optionsPanel;
+    [SerializeField] private GameObject _howToPlayPanel;
 
     private void Start()
     {
         _gameManager = GameManager.Instance;    
     }
 
-    private void PlayGame()
+    public void PlayGame()
     {
-        //_gameManager.LoadLevel(1);
+        SceneManager.LoadScene("Demo Level");
     }
     
-    private void Options()
+    public void HowToPlay()
     {
        _mainMenuPanel.SetActive(false);
-        _optionsPanel.SetActive(true);
+        _howToPlayPanel.SetActive(true);
     }
 
-    private void ExitGame()
+    public void ExitGame()
     {
         Application.Quit();
     }   
