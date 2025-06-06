@@ -46,7 +46,7 @@ public class Enemy : MonoBehaviour
 
         if (player != null) 
         {
-            player.GotHit();
+            //player.GotHit();
             //Anim Hit On Player
         }
     }

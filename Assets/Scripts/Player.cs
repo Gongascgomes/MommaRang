@@ -71,17 +71,17 @@ public class Player : MonoBehaviour
  
 
 
-    public void GotHit()
-    {
-        _lifes--;
+    //public void GotHit()
+    //{
+    //    _lifes--;
 
-        if (_lifes <= 0)
-        {
-            Destroy(gameObject);
-            //para o jogo
-            //chama a gameover screen
-        }
-    }
+    //    if (_lifes <= 0)
+    //    {
+    //        Destroy(gameObject);
+    //        //para o jogo
+    //        //chama a gameover screen
+    //    }
+    //}
 
     private void OnCollect()
     {
