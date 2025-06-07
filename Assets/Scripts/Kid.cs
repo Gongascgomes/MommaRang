@@ -7,6 +7,8 @@ public class Kid : MonoBehaviour
     private Rigidbody2D _rigidBody;
 
     [SerializeField] FlipFlopBoom ffboom;
+    [SerializeField] SoundPlayer _soundPlayer;
+
 
     private int _health = 3;
 

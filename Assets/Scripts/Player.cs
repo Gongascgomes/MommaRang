@@ -22,6 +22,8 @@ public class Player : MonoBehaviour
     [SerializeField] private LayerMask _whatIsGround;
     [SerializeField] private float _checkGroundDistance;
 
+    [SerializeField] SoundPlayer _soundPlayer;
+
     public int Lifes { get => _lifes; set => _lifes = value; }
     #endregion
 
